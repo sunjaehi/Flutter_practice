@@ -10,7 +10,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Image.asset('KakaoTalk_20240727_225507249.jpg')
+      home: Scaffold(
+        appBar: AppBar(title: Text('앱'),
+            backgroundColor:Colors.blue),
+        body: Container(child: Text('안녕')),
+        bottomNavigationBar: BottomNavigationBar(
+            items: const<BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.phone),
+                  label:'Phone',
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.message),
+                  label:'Message',
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.contact_page),
+                  label:'Contact',
+
+            ),
+          ],
+        )
+      )
     );
   }
 }
