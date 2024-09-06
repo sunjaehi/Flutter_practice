@@ -73,7 +73,7 @@ class AvatarWidget extends StatelessWidget {
         Text(nickname??'',
           style: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 10,
+              fontSize: 16,
           ),
         ),
       ],
@@ -82,7 +82,7 @@ class AvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch(type){ //11분
+    switch(type){
       case AvatarType.TYPE1:
         return type1Widget();
       case AvatarType.TYPE2:
