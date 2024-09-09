@@ -1,4 +1,5 @@
 import 'package:code_basic/src/components/image_data.dart';
+import 'package:code_basic/src/controller/bottom_nav_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -50,15 +51,24 @@ class _SearchFocusState extends State<SearchFocus> with TickerProviderStateMixin
     );
   }
 
-  // Widget _body() {
-  //   //21분
-  // }
+  Widget _body() {
+    return TabBarView(
+        controller: tabController,
+        children: const [
+          Center(child: Text('인기페이지')),
+          Center(child: Text('계정페이지')),
+          Center(child: Text('오디오페이지')),
+          Center(child: Text('태그페이지')),
+          Center(child: Text('장소페이지')),
+        ],
+      );
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: Get.back,
+          onTap: BottomNavController.to.willPopAction,
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: ImageData(
@@ -84,7 +94,7 @@ class _SearchFocusState extends State<SearchFocus> with TickerProviderStateMixin
       ),
         bottom: _tabMenu(),
       ),
-      // body: _body(),
+      body: _body(),
     );
   }
 }
