@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:code_basic/src/components/image_data.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -14,6 +16,7 @@ class _UploadState extends State<Upload> {
   var albums = <AssetPathEntity>[];
   var imageList = <AssetEntity>[];
   var headerTitle = '';
+  AssetEntity? selectedImage;
 
   @override
   void initState() {
@@ -49,6 +52,7 @@ class _UploadState extends State<Upload> {
   Future<void> _pagingPhotos() async{
     var photos = await albums.first.getAssetListPaged(page: 0, size: 30);
     imageList.addAll(photos);
+    selectedImage = imageList.first;
   }
   void update()=>setState(() {});
 
@@ -58,7 +62,20 @@ class _UploadState extends State<Upload> {
         width: width,
         height: width,
         color: Colors.grey,
+        child: selectedImage == null
+            ? Container()
+            : _photoWidget(
+                selectedImage!,
+                width.toInt(),
+                builder: (data) {
+                  return Image.memory(
+                    data,
+                    fit: BoxFit.cover,
+                  );
+                }
+        ),
     );
+
   }
 
   Widget _header() {
@@ -120,11 +137,35 @@ class _UploadState extends State<Upload> {
       ),
       itemCount: imageList.length,
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-          //15분
-        );
-      }
+        return _photoWidget(imageList[index],200, builder:(data) {
+          return GestureDetector(
+            onTap: () {
+              selectedImage = imageList[index];
+              update();
+            },
+            child: Opacity(
+              opacity: imageList[index] == selectedImage ? 0.3 :1,
+              child: Image.memory(
+                data,
+                fit: BoxFit.cover,
+              ),
+            ),
+          );
+        });
+      },
     );
+  }
+
+  Widget _photoWidget(AssetEntity asset, int size, {required Widget Fuction(Uint8List) builder}) {
+    return FutureBuilder(
+        future: asset.thumbnailDataWithSize(200 as ThumbnailSize),
+        builder: (_, AsyncSnapshot<Uint8List?> snapshot) {
+          if (snapshot.hasData) {
+            return builder(snapshot.data!);
+          } else { //30분
+            return Container();
+          }
+    },);
   }
 
   @override
