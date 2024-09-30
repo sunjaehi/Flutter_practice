@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:code_basic/src/components/image_data.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class Upload extends StatefulWidget {
@@ -226,7 +227,7 @@ class _UploadState extends State<Upload> {
         backgroundColor: Colors.white,
         elevation:0,
         leading: GestureDetector(
-          onTap: () {},
+          onTap: Get.back,
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: ImageData(IconsPath.closeImage),
